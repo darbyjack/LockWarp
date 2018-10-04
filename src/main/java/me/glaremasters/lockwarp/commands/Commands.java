@@ -51,6 +51,19 @@ public class Commands extends BaseCommand {
         player.sendMessage(color(lockWarp.getConfig().getString("messages.list").replace("{warps}", joiner.toString())));
     }
 
+    @Subcommand("delwarp")
+    @CommandPermission("lw.delwarp")
+    @Syntax("<warp name>")
+    public void onWarpRemove(Player player, String warpName) {
+        FileConfiguration warpsConfig = lockWarp.getWarpsConfig();
+        if (!warpsConfig.contains(warpName)) {
+            player.sendMessage(color(lockWarp.getConfig().getString("messages.warp-invalid")));
+            return;
+        }
+        warpsConfig.set(warpName, null);
+        lockWarp.saveData();
+    }
+
     @Subcommand("warp")
     @CommandPermission("lw.warp")
     @Syntax("<warp name>")
