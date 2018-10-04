@@ -5,6 +5,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import me.glaremasters.lockwarp.LockWarp;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -65,6 +66,13 @@ public class Commands extends BaseCommand {
                 return;
             }
         }
+        if (coolDown.contains(warpName)) {
+            player.sendMessage(color(lockWarp.getConfig().getString("messages.cooldown")));
+            return;
+        }
+        player.teleport(ACFBukkitUtil.stringToLocation(lockWarp.getWarpsConfig().getString(warpName + ".loc")));
+        coolDown.add(warpName);
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(lockWarp, () -> coolDown.remove(warpName), (20 * lockWarp.getWarpsConfig().getInt(warpName + ".cd")));
     }
 
 

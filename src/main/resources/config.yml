@@ -3,3 +3,4 @@ messages:
   list: "Warps: [{warps}]"
   warp-invalid: "That warp is invalid or does not exist!"
   no-permission: "You do not have permission to teleport to that warp!"
+  cooldown: "That warp is currently on cool-down, please try again later!"
