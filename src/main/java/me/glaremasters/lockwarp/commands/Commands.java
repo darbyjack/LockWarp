@@ -5,11 +5,11 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import me.glaremasters.lockwarp.LockWarp;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import static co.aikar.commands.ACFBukkitUtil.color;
 
@@ -29,13 +29,24 @@ public class Commands extends BaseCommand {
     @CommandPermission("lw.setwarp")
     @Syntax("<warp name> <cooldown> <require permission (true / false)> <permission node>")
     public void onSetWarp(Player player, String warpName, Integer cooldown, boolean requirePermission, @Optional String permissionNode) {
-        FileConfiguration warpsConfig = lockWarp.getWarpsConfig();
-        warpsConfig.set(warpName + ".loc", ACFBukkitUtil.fullLocationToString(player.getLocation()));
-        warpsConfig.set(warpName + ".cd", cooldown);
-        warpsConfig.set(warpName + ".checkPerm", requirePermission);
-        warpsConfig.set(warpName + ".permNode", permissionNode);
+        lockWarp.getWarpsConfig().set(warpName + ".loc", ACFBukkitUtil.fullLocationToString(player.getLocation()));
+        lockWarp.getWarpsConfig().set(warpName + ".cd", cooldown);
+        lockWarp.getWarpsConfig().set(warpName + ".checkPerm", requirePermission);
+        if (permissionNode != null) {
+            lockWarp.getWarpsConfig().set(warpName + ".permNode", permissionNode);
+        }
         lockWarp.saveData();
         player.sendMessage(color(lockWarp.getConfig().getString("messages.setwarp")).replace("{warp}", warpName).replace("{time}", String.valueOf(cooldown)));
+    }
+
+    @Subcommand("list")
+    @CommandPermission("lw.list")
+    public void onWarpList(Player player) {
+        StringJoiner joiner = new StringJoiner(", ");
+        for (String warp : lockWarp.getWarpsConfig().getKeys(false)) {
+            joiner.add(warp);
+        }
+        player.sendMessage(color("Warps: [" + joiner.toString() + "]"));
     }
 
 
