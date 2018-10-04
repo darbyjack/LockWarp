@@ -34,10 +34,11 @@ public final class LockWarp extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
+    public void onDisable() {}
 
+    /**
+     * Loads the config and all the warps on startup
+     */
     public void loadData() {
         try {
             warps = new File(getDataFolder(), "warps.yml");
@@ -48,6 +49,9 @@ public final class LockWarp extends JavaPlugin {
         }
     }
 
+    /**
+     * Save the config when needed
+     */
     public void saveData() {
         try {
             warpsConfig.save(warps);
@@ -56,10 +60,17 @@ public final class LockWarp extends JavaPlugin {
         }
     }
 
+    /**
+     * Getter for the warps config
+     * @return getter
+     */
     public FileConfiguration getWarpsConfig() {
         return warpsConfig;
     }
 
+    /**
+     * Print a nice looking logo in console
+     */
     private void logo() {
         info("");
         info("  _               _   __        __               ");
