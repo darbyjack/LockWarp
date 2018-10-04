@@ -1,0 +1,5 @@
+name: LockWarp
+version: ${project.version}
+main: me.glaremasters.lockwarp.LockWarp
+authors: [blockslayer22]
+description: Lock warps when players are within distance of it!
