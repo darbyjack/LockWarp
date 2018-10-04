@@ -1,2 +1,5 @@
 messages:
   setwarp: "&aSuccess! You've created the warp {warp} with a cool-down of {time} seconds!"
+  list: "Warps: [{warps}]"
+  warp-invalid: "That warp is invalid or does not exist!"
+  no-permission: "You do not have permission to teleport to that warp!"

@@ -5,6 +5,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import me.glaremasters.lockwarp.LockWarp;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -46,7 +47,24 @@ public class Commands extends BaseCommand {
         for (String warp : lockWarp.getWarpsConfig().getKeys(false)) {
             joiner.add(warp);
         }
-        player.sendMessage(color("Warps: [" + joiner.toString() + "]"));
+        player.sendMessage(color(lockWarp.getConfig().getString("messages.list").replace("{warps}", joiner.toString())));
+    }
+
+    @Subcommand("warp")
+    @CommandPermission("lw.warp")
+    @Syntax("<warp name>")
+    public void onWarp(Player player, String warpName) {
+        FileConfiguration warpsConfig = lockWarp.getWarpsConfig();
+        if (!warpsConfig.contains(warpName)) {
+            player.sendMessage(color(lockWarp.getConfig().getString("messages.warp-invalid")));
+            return;
+        }
+        if (warpsConfig.getBoolean(warpName + ".checkPerm")) {
+            if (!player.hasPermission(warpsConfig.getString(warpName + ".permNode"))) {
+                player.sendMessage(color(lockWarp.getConfig().getString("messages.no-permission")));
+                return;
+            }
+        }
     }
 
 
