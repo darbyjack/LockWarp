@@ -1,6 +1,7 @@
 package me.glaremasters.lockwarp;
 
 import co.aikar.commands.BukkitCommandManager;
+import me.glaremasters.lockwarp.commands.Commands;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,7 +20,8 @@ public final class LockWarp extends JavaPlugin {
         saveDefaultConfig();
         this.manager = new BukkitCommandManager(this);
         manager.enableUnstableAPI("help");
-        saveData();
+        manager.registerCommand(new Commands());
+        loadData();
     }
 
     @Override
@@ -27,7 +29,7 @@ public final class LockWarp extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public void saveData() {
+    public void loadData() {
         try {
             warps = new File(getDataFolder(), "warps.yml");
             warpsConfig = YamlConfiguration.loadConfiguration(warps);
@@ -35,6 +37,17 @@ public final class LockWarp extends JavaPlugin {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
 
+    public void saveData() {
+        try {
+            warpsConfig.save(warps);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public FileConfiguration getWarpsConfig() {
+        return warpsConfig;
     }
 }
