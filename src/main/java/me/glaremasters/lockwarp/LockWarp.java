@@ -34,7 +34,11 @@ public final class LockWarp extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+        info("Saving data and shutting down....");
+        saveData();
+        info("Saving done! Have a nice day!");
+    }
 
     /**
      * Loads the config and all the warps on startup
