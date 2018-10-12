@@ -3,6 +3,7 @@ package me.glaremasters.lockwarp;
 import co.aikar.commands.BukkitCommandManager;
 import io.papermc.lib.PaperLib;
 import me.glaremasters.lockwarp.commands.Commands;
+import me.glaremasters.lockwarp.updater.SpigotUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -33,6 +34,10 @@ public final class LockWarp extends JavaPlugin {
         loadData();
         info("Ready to go! That only took " + (System.currentTimeMillis() - start) + "ms");
         PaperLib.suggestPaper(this);
+
+        info("Checking for updates...");
+        SpigotUpdater updater = new SpigotUpdater(this, 61342);
+        updateCheck(updater);
     }
 
     @Override
@@ -66,8 +71,20 @@ public final class LockWarp extends JavaPlugin {
         }
     }
 
+    private void updateCheck(SpigotUpdater updater) {
+        try {
+            if (updater.checkForUpdates()) {
+                info("You appear to be running a version other than our latest stable release." + " You can download our newest version at: " + updater.getResourceURL());
+            }
+        } catch (Exception ex) {
+            info("Could not check for updates! Stacktrace:");
+            ex.printStackTrace();
+        }
+    }
+
     /**
      * Getter for the warps config
+     *
      * @return getter
      */
     public FileConfiguration getWarpsConfig() {
