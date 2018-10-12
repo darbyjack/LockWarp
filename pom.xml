@@ -6,7 +6,7 @@
 
     <groupId>me.glaremasters</groupId>
     <artifactId>LockWarp</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>LockWarp</name>
@@ -52,6 +52,12 @@
                         <configuration>
                             <minimizeJar>true</minimizeJar>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <relocations>
+                            <relocation>
+                                <pattern>io.papermc.lib</pattern>
+                                <shadedPattern>me.glaremasters.paperlib</shadedPattern>
+                            </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -81,6 +87,10 @@
             <id>aikar</id>
             <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -94,6 +104,12 @@
             <groupId>co.aikar</groupId>
             <artifactId>acf-bukkit</artifactId>
             <version>0.5.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.papermc</groupId>
+            <artifactId>paperlib</artifactId>
+            <version>1.0.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

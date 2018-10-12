@@ -1,6 +1,7 @@
 package me.glaremasters.lockwarp;
 
 import co.aikar.commands.BukkitCommandManager;
+import io.papermc.lib.PaperLib;
 import me.glaremasters.lockwarp.commands.Commands;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -31,6 +32,7 @@ public final class LockWarp extends JavaPlugin {
         info("Loading Warps...");
         loadData();
         info("Ready to go! That only took " + (System.currentTimeMillis() - start) + "ms");
+        PaperLib.suggestPaper(this);
     }
 
     @Override
