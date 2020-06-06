@@ -1,6 +1,6 @@
 package me.glaremasters.lockwarp;
 
-import co.aikar.commands.BukkitCommandManager;
+import co.aikar.commands.PaperCommandManager;
 import io.papermc.lib.PaperLib;
 import me.glaremasters.lockwarp.commands.Commands;
 import me.glaremasters.lockwarp.updater.SpigotUpdater;
@@ -16,10 +16,10 @@ import static co.aikar.commands.ACFBukkitUtil.color;
 
 public final class LockWarp extends JavaPlugin {
 
-    private BukkitCommandManager manager;
+    private PaperCommandManager manager;
     private File warps;
     private FileConfiguration warpsConfig;
-    private String logPrefix = "&c[&8LockWarp&c]&r ";
+    private final String logPrefix = "&c[&8LockWarp&c]&r ";
 
     @Override
     public void onEnable() {
@@ -27,7 +27,7 @@ public final class LockWarp extends JavaPlugin {
         logo();
         saveDefaultConfig();
         info("Loading Commands...");
-        this.manager = new BukkitCommandManager(this);
+        this.manager = new PaperCommandManager(this);
         manager.enableUnstableAPI("help");
         manager.registerCommand(new Commands());
         info("Loading Warps...");

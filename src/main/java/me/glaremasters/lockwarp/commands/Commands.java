@@ -25,7 +25,7 @@ public class Commands extends BaseCommand {
 
     @Dependency private LockWarp lockWarp;
 
-    private Set<String> coolDown = new HashSet<>();
+    private final Set<String> coolDown = new HashSet<>();
 
     @Subcommand("setwarp")
     @CommandPermission("lw.setwarp")
